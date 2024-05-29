@@ -17,3 +17,8 @@ Projeto Front end com foco em consumir dados de uma API que lista e extrai infor
 
 ## Variáveis de ambiente
 ```REACT_APP_API_URL``` é a variável responsável pelo endereço para a comunicação com a API.
+
+## Arquivos para testes
+neste link você encontrará arquivos para realizar os testes necessários.
+
+[Arquivos](https://drive.google.com/drive/folders/1lCfuop8bqWsOdfJp8LHGXA3AVAsrutVp?usp=sharing)
