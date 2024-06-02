@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAPI } from "../../hooks/useAPI";
+import { useAPI } from "../../hooks/useAPI/useAPI";
 import { AxiosError, AxiosResponse } from "axios";
 import { Fatura } from "../../types/Fatura";
-import { useLoading } from "../../components/loading";
+import { useLoading } from "../../components/loading/loading";
 import { ChartListType } from "../../enum/chatListType.enum";
 import { toast } from "react-toastify";
 

@@ -1,20 +1,23 @@
 import { useToast } from "@chakra-ui/react";
-import { useLoading } from "../../components/loading";
-import { useAPI } from "../../hooks/useAPI";
 import { AxiosError } from "axios";
+import { IUseAPI } from "../../hooks/useAPI/types/iUseApi";
+import { IUseLoading } from "../../components/loading/types/useLoading";
 
-export default function useAnexarFatura() {
+interface useAnexarFaturaProps {
+    api: IUseAPI,
+    loading: IUseLoading
+}
 
-    const { apiPost } = useAPI();
-    const { startLoading, stopLoading } = useLoading();
+export default function useAnexarFatura({ api, loading }: useAnexarFaturaProps) {
+
     const toast = useToast();
 
     function uploadFatura(file: File) {
         const formData = new FormData();
         formData.append('file', file);
-        startLoading('Salvando fatura em nosso banco de dados...');
-    
-        apiPost({
+        loading.startLoading('Salvando fatura em nosso banco de dados...');
+
+        api.apiPost({
             endPoint: "fatura",
             payload: formData,
             config: {
@@ -23,7 +26,7 @@ export default function useAnexarFatura() {
                 }
             }
         }).then(() => {
-            stopLoading();
+            loading.stopLoading();
             window.location.reload();
         }).catch((error: AxiosError) => {
             console.log("[uploadFatura] error: ", error);
@@ -34,7 +37,7 @@ export default function useAnexarFatura() {
                 duration: 9000,
                 isClosable: true,
             });
-            stopLoading();
+            loading.stopLoading();
         });
     }
 

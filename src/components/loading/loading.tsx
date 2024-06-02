@@ -1,10 +1,8 @@
 import { Box, Spinner } from '@chakra-ui/react'
 import { ReactNode, createContext, useContext, useState } from "react";
+import { IUseLoading } from './types/useLoading';
 
-const LoadingContext = createContext<{
-    startLoading: (message?: string) => void;
-    stopLoading: () => void;
-}>({
+const LoadingContext = createContext<IUseLoading>({
     startLoading: (message?: string) => {
         throw new Error(
         "Você está chamando StartLoading fora de um <LoadingProvider>"

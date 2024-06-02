@@ -4,8 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
-import { LoadingProvider } from './components/loading';
+import { LoadingProvider } from './components/loading/loading';
 import { ToastContainer } from 'react-toastify';
+import GlobalProvider from './components/globalProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,11 +14,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <LoadingProvider>
+    <GlobalProvider>
         <App />
-      </LoadingProvider>
-    </ChakraProvider>
+    </GlobalProvider>
   </React.StrictMode>
 );
 
