@@ -39,7 +39,10 @@ describe('useAnexarFatura', () => {
 
     apiPostMock = mockAPI.apiPost as jest.Mock;
 
-    window.location = { reload: jest.fn() } as any;
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: { reload: jest.fn() }
+    });
   });
 
   it('deve fazer o upload do arquivo com sucesso', async () => {
@@ -47,7 +50,6 @@ describe('useAnexarFatura', () => {
 
     const { result } = renderHook(() => useAnexarFatura({ api: mockAPI, loading: mockLoading }));
     const file = new File(['dummy content'], 'example.pdf', { type: 'application/pdf' });
-    window.location = { reload: jest.fn() } as any;
 
     await act(async () => {
       await result.current.uploadFatura(file);

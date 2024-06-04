@@ -1,5 +1,5 @@
-import { Box, Text } from "@chakra-ui/layout";
-import { Tfoot, Tr } from "@chakra-ui/table";
+import { Text } from "@chakra-ui/layout";
+import { Tfoot, Tr, Td } from "@chakra-ui/table";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 
@@ -37,7 +37,7 @@ export function Paginator({ onPageChange, limit, maxPage }: PaginatorProps) {
   return (
     <Tfoot width={'100%'}>
       <Tr display={'flex'} flexDirection={'row'}>
-        <Box
+        <Td
           bg="blue.500"
           color={'white'}
           cursor={'pointer'}
@@ -47,12 +47,12 @@ export function Paginator({ onPageChange, limit, maxPage }: PaginatorProps) {
           mr={2}
         >
           <ArrowLeft size={20} />
-        </Box>
+        </Td>
         {array.map((_, idx) => {
           const pageNumber = idx + page;
           return (
             pageNumber <= maxPage && (
-              <Box
+              <Td
                 key={pageNumber}
                 borderWidth={1}
                 borderRadius="md"
@@ -67,11 +67,11 @@ export function Paginator({ onPageChange, limit, maxPage }: PaginatorProps) {
                 onClick={() => handleSetNumberPages(pageNumber)}
               >
                 <Text fontSize="xs">{pageNumber}</Text>
-              </Box>
+              </Td>
             )
           );
         })}
-        <Box
+        <Td
           bg="blue.500"
           onClick={() => handleSetNumberPages(page + 1)}
           ml={2}
@@ -81,7 +81,7 @@ export function Paginator({ onPageChange, limit, maxPage }: PaginatorProps) {
           cursor={'pointer'}
         >
           <ArrowRight size={20} />
-        </Box>
+        </Td>
       </Tr>
     </Tfoot>
   );

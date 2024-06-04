@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, HttpStatusCode } from "axios";
+import axios from "axios";
 import { ApiGetParams } from "./types/apiGetParams";
 import { ApiPostParams } from "./types/apiPostParams";
 import { ApiPutParams } from "./types/apiPutParams";

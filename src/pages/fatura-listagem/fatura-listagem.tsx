@@ -1,7 +1,7 @@
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
 import { Paginator } from "../../components/Paginator";
 import useFaturaListagem from "./useFaturaListagem";
-import { Box, Button, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Input } from "@chakra-ui/react";
 import { ArrowClockwise, MagnifyingGlass } from "@phosphor-icons/react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartListType } from "../../enum/chatListType.enum";
