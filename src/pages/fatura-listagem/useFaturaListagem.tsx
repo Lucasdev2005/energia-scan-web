@@ -21,7 +21,7 @@ export default function useFaturaListagem() {
     useEffect(() => {
         getFaturas();
         getChart();
-    }, [paginate]);
+    }, []);
 
     function getFaturas() {
         const params = {...paginate, FTR_NumeroCliente: numeroCliente}
