@@ -19,8 +19,8 @@ export default function useFaturaListagem() {
     const [chartListType, setChartListType] = useState<ChartListType>(ChartListType.CONSUMO_MENSAL);
 
     useEffect(() => {
-        getFaturas()
-        getChart()
+        getFaturas();
+        getChart();
     }, [paginate]);
 
     function getFaturas() {
