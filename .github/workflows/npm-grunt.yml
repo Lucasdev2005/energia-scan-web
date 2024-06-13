@@ -41,7 +41,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Checkout do código
+    - name: Checkout do código 
       uses: actions/checkout@v2
 
     - name: Build e push da imagem Docker
