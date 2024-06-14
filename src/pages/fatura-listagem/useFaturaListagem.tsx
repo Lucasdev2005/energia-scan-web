@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAPI } from "../../hooks/useAPI/useAPI";
 import { AxiosError, AxiosResponse } from "axios";
 import { Fatura } from "../../types/Fatura";
@@ -12,19 +12,15 @@ export default function useFaturaListagem() {
     const { startLoading, stopLoading } = useLoading();
 
     const [paginate, setPaginate] = useState({page: 1, pageSize: 5});
+    const [mount, setMount] = useState(false);
     const [limitPage, setLimitPage] = useState<number>(5);
     const [numeroCliente, setNumeroCliente] = useState<string>();
     const [faturas, setFaturas] = useState<Fatura[]>([]);
     const [chart, setChart] = useState<{consumoPorMes: any[], valorTotalPorMes: any[]}>();
     const [chartListType, setChartListType] = useState<ChartListType>(ChartListType.CONSUMO_MENSAL);
 
-    useEffect(() => {
-        getFaturas();
-        getChart();
-    }, []);
-
-    function getFaturas() {
-        const params = {...paginate, FTR_NumeroCliente: numeroCliente}
+    const getFaturas = useCallback(() => {
+        const params = {...paginate, FTR_NumeroCliente: numeroCliente};
         if (!params.FTR_NumeroCliente) {
             delete(params.FTR_NumeroCliente);
         }
@@ -39,10 +35,10 @@ export default function useFaturaListagem() {
         }).catch((error: AxiosError) => {
             toast.error(error.message);
         });
-    }
+    }, [apiGet, paginate, numeroCliente, startLoading, stopLoading]);
 
-    function getChart() {
-        const params = {FTR_NumeroCliente: numeroCliente}
+    const getChart = useCallback(() => {
+        const params = {FTR_NumeroCliente: numeroCliente};
         if (!params.FTR_NumeroCliente) {
             delete(params.FTR_NumeroCliente);
         }
@@ -56,7 +52,15 @@ export default function useFaturaListagem() {
         }).catch((error: AxiosError) => {
             toast.error(error.message);
         });
-    }
+    }, [apiGet, numeroCliente, startLoading, stopLoading]);
+
+    useEffect(() => {
+        if (!mount) {
+            getFaturas();
+            getChart();
+            setMount(true);
+        }
+    }, [mount, getFaturas, getChart]);
 
     function formataFaturaData(date: string) {
         const formatedDate = new Date(date);
@@ -66,8 +70,8 @@ export default function useFaturaListagem() {
     }
 
     function handleFilterByNumeroCliente() {
-        getChart();
         getFaturas();
+        getChart();
     }
 
     function handleSetChartType() {
