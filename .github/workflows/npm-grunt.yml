@@ -24,9 +24,10 @@ jobs:
 
     - name: Build do projeto
       run: npm run build
-
     - name: Rodar testes unitários
       run: npm run test
+      env:
+        CI: true
 
   docker:
     runs-on: ubuntu-latest
