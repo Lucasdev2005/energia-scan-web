@@ -1,9 +1,5 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import useFaturaListagem from './useFaturaListagem';
-import { ChartListType } from '../../enum/chatListType.enum';
 import { renderHook } from '@testing-library/react';
-import { IUseAPI } from '../../hooks/useAPI/types/iUseApi';
 
 
 const mockApiGet = jest.fn();
