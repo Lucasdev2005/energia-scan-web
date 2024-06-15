@@ -5,6 +5,8 @@ import { Box, Button, Input } from "@chakra-ui/react";
 import { ArrowClockwise, MagnifyingGlass } from "@phosphor-icons/react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartListType } from "../../enum/chatListType.enum";
+import { useLoading } from "../../components/loading/loading";
+import { useAPI } from "../../hooks/useAPI/useAPI";
 
 export default function FaturaListagem() {
 
@@ -18,7 +20,10 @@ export default function FaturaListagem() {
         chart,
         chartListType,
         handleSetChartType
-    } = useFaturaListagem();
+    } = useFaturaListagem({
+        useAPI: useAPI(),
+        useLoading: useLoading()
+    });
 
     return (
         <Box mt={3}>

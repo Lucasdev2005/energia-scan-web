@@ -1,15 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import { useAPI } from "../../hooks/useAPI/useAPI";
 import { AxiosError, AxiosResponse } from "axios";
 import { Fatura } from "../../types/Fatura";
-import { useLoading } from "../../components/loading/loading";
 import { ChartListType } from "../../enum/chatListType.enum";
 import { toast } from "react-toastify";
+import { IUseAPI } from "../../hooks/useAPI/types/iUseApi";
+import { IUseLoading } from "../../components/loading/types/useLoading";
 
-export default function useFaturaListagem() {
+interface UseFaturaProps {
+    useAPI: IUseAPI,
+    useLoading: IUseLoading
+}
+
+export default function useFaturaListagem({ useAPI, useLoading }: UseFaturaProps) {
     
-    const { apiGet } = useAPI();
-    const { startLoading, stopLoading } = useLoading();
+    const { apiGet } = useAPI;
+    const { startLoading, stopLoading } = useLoading;
 
     const [paginate, setPaginate] = useState({page: 1, pageSize: 5});
     const [mount, setMount] = useState(false);
