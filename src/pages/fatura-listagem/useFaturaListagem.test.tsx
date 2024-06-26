@@ -1,5 +1,6 @@
+import { ChartListType } from '../../enum/chatListType.enum';
 import useFaturaListagem from './useFaturaListagem';
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 
 
 const mockApiGet = jest.fn();
@@ -8,12 +9,7 @@ const mockApiPut = jest.fn();
 const mockApiDelete = jest.fn();
 const mockApiPatch = jest.fn();
 
-describe('useFaturaListagem', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('deve ser feito o fetch das faturas e do gráfico', async () => {
+function renderUseFatura () {
     mockApiGet.mockImplementation((params) => {
         if (params.endPoint === 'fatura') {
             return new Promise((resolve) => {
@@ -47,7 +43,7 @@ describe('useFaturaListagem', () => {
         }
     });
 
-    const { result } = renderHook(() => useFaturaListagem({
+    return renderHook(() => useFaturaListagem({
         useAPI: {
             apiGet: mockApiGet,
             apiPost: mockApiPost,
@@ -59,18 +55,37 @@ describe('useFaturaListagem', () => {
             startLoading: jest.fn(),
             stopLoading: jest.fn()
         }
-    }));
+    }))
+}
 
-    expect(mockApiGet).toHaveBeenNthCalledWith(1, expect.objectContaining({
-        endPoint: 'fatura',
-        config: expect.objectContaining({
-            params: expect.objectContaining({page: 1, pageSize: 5})
-        })
-    }));
-    
-    expect(mockApiGet).toHaveBeenNthCalledWith(2, expect.objectContaining({
-        endPoint: 'chart',
-        config: expect.objectContaining({})
-    }));
+describe('useFaturaListagem', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
+
+    it('deve ser feito o fetch das faturas e do gráfico', async () => {
+        renderUseFatura();
+
+        expect(mockApiGet).toHaveBeenNthCalledWith(1, expect.objectContaining({
+            endPoint: 'fatura',
+            config: expect.objectContaining({
+                params: expect.objectContaining({page: 1, pageSize: 5})
+            })
+        }));
+
+        expect(mockApiGet).toHaveBeenNthCalledWith(2, expect.objectContaining({
+            endPoint: 'chart',
+            config: expect.objectContaining({})
+        }));
+    });
+
+    it('ao clicar no botão de tipo de gráfico, deve alterar tipo de dado listado no gráfico', () => {
+        const { result } = renderUseFatura();
+    
+        act(async () => {
+            await result.current.handleSetChartType();
+            expect(result.current.chartListType).toEqual(ChartListType.CONSUMO_MENSAL);
+        });
+    
+      });
 });
